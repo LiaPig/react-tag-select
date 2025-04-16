@@ -1,54 +1,58 @@
-# React + TypeScript + Vite
+# TagSelect
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+这是一个基于 `antd` 的 `<Select />` 和 `<Tag />` 封装的选项样式为标签的选择器组件。
 
-Currently, two official plugins are available:
+下图为该组件的展示效果。
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![demo.gif](./demo.gif)
 
-## Expanding the ESLint configuration
+## Option 的属性介绍
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+| 属性名    | 说明                      | 类型             | 默认值 |
+|-----------|---------------------------|------------------|--------|
+| label     | 选项内容                  | string           | -      |
+| value     | 选项值                    | string \| number | -      |
+| tag       | 对应 <Tag/> 的 color 属性 | boolean          | false  |
+| disabled  | 是否禁用                  | boolean          | false  |
+| className | Option 器类名             | string           | -      |
+| style     | Option 器样式             | string           | -      |
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 安装和启动此项目
+```bash
+# 进入项目后安装依赖
+npm install
+# 启动项目
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 使用示例
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+可见 [APP.tsx](./src/App.tsx)
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```tsx
+import { useState } from 'react'
+import TagSelect from './components/TagSelect'
+
+function App() {
+  const [value, setValue] = useState('1')
+
+  return (
+    <div style={{ paddingLeft: '40vw' }}>
+      <TagSelect
+        style={{ width: '20vw', textAlign: 'left' }}
+        value={value}
+        onChange={(value) => setValue(value as string)}
+        options={[
+          { label: 'success', value: '1', tag: 'success' },
+          { label: 'processing', value: '2', tag: 'processing' },
+          { label: 'error', value: '3', tag: 'error' },
+          { label: 'warning', value: '4', tag: 'warning' },
+          { label: 'default', value: '5', tag: 'default' },
+        ]}
+      />
+    </div>
+  )
+}
+
+export default App
 ```
